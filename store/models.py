@@ -36,6 +36,10 @@ class Product(models.Model):
 	# 업로드 파일의 경로		#업로드 파일의 파일 이름
     # <img src="{{ article.image.url }}" alt="{{ article.image }}">
     image = models.ImageField(upload_to='upload/product')
+    
+    # Add Sale Stuff
+    is_sale = models.BooleanField(default=False)
+    sale_price = models.DecimalField(default=0,decimal_places=2,max_digits=6) #9999.99
 
 
     def __str__(self):
