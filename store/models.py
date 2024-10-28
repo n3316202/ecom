@@ -3,14 +3,19 @@ from unicodedata import category
 from django.db import models
 from datetime import datetime
 
-
-
 # Create your models here.
 class Category(models.Model):
     name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
+    
+    #vrbose_name_plural
+    #어드민 패널을 만지다 보면 내가 등록한 모델 이름을 장고 어드민이 알아서 복수로 만들어 주는 것을 알 수 있다. 
+    #그럴때 가끔 -y 로 끝나는 단어의 끝에도 그냥 s를 붙이는 경우가 있는데, 이때 메타 클래스의 verbose_name을 이용해서 바꿔줄 수 있다.
+    class Meta:
+        verbose_name_plural = 'categories'
+
     
 class Customer(models.Model):
     first_name = models.CharField(max_length=50)
@@ -27,7 +32,11 @@ class Product(models.Model):
     price = models.DecimalField(default=0,decimal_places=2,max_digits=6) #9999.99
     category = models.ForeignKey(Category,on_delete=models.CASCADE,default=1)
     description = models.CharField(max_length=250,default='',blank=True, null=True)
+   
+	# 업로드 파일의 경로		#업로드 파일의 파일 이름
+    # <img src="{{ article.image.url }}" alt="{{ article.image }}">
     image = models.ImageField(upload_to='upload/product')
+
 
     def __str__(self):
         return self.name
