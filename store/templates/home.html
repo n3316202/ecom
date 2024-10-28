@@ -94,6 +94,7 @@
           {% for product in products %}
           <div class="col mb-5">
             <div class="card h-100">
+              {% if product.is_sale %}
               <!-- Sale badge-->
               <div
                 class="badge bg-dark text-white position-absolute"
@@ -101,6 +102,7 @@
               >
                 Sale
               </div>
+              {% endif %}
               <!-- Product image-->
               <img class="card-img-top" src="{{product.image.url}}" alt="..." />
               <!-- Product details-->
@@ -119,10 +121,11 @@
                     <div class="bi-star-fill"></div>
                   </div>
                   <!-- Product price-->
+                  {% if product.is_sale %}
                   <span class="text-muted text-decoration-line-through"
                     >$20.00</span
                   >
-                  ${{ product.price }}
+                  {% endif %} ${{ product.price }}
                 </div>
               </div>
               <!-- Product actions-->
@@ -140,6 +143,7 @@
 
           <div class="col mb-5">
             <div class="card h-100">
+              {% if product.is_sale %}
               <!-- Sale badge-->
               <div
                 class="badge bg-dark text-white position-absolute"
@@ -147,6 +151,7 @@
               >
                 Sale
               </div>
+              {% endif %}
               <!-- Product image-->
               <img
                 class="card-img-top"
