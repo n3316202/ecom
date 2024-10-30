@@ -1,4 +1,6 @@
 from django.shortcuts import redirect, render
+
+from store.forms import SignUpForm
 from .models import Product
 
 from PIL import Image
@@ -11,7 +13,33 @@ from django.contrib.auth import authenticate, login , logout
 from django.contrib import messages
 
 def register_user(request):
-    return render(request, 'register.html',{})
+    print("register.. 실행")
+    if request.method == "POST":
+        print("register.. 실행.....")
+        form = SignUpForm(request.POST)
+
+        if form.is_valid():
+            print(form)
+            form.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            #log in user
+            user = authenticate(username=username,password=password)
+            login(request,user)
+            messages.success(request,('You Have Registered'))
+            return redirect('home')
+        else:
+            print(form.errors)
+            for field in form:
+                print("Field Error:",  field.errors)
+
+            messages.success(request,('Whoops! There was a problem Registering, Please Try again'))
+            return redirect('register')
+    else:
+        form = SignUpForm()
+    
+    return render(request, 'register.html',{'form':form})
+
 
 def home(request):
     products = Product.objects.all()
