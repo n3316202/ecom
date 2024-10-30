@@ -35,7 +35,7 @@
         aria-label="Close"
       ></button>
     </div>
-    {% endfor %}
+    {% endfor %} {%endif%}
     <!-- Header-->
     <header class="bg-dark py-5">
       <div class="container px-4 px-lg-5 my-5">
@@ -48,7 +48,7 @@
       </div>
     </header>
 
-    {%endif%} {% block content %} {% endblock %}
+    {% block content %} {% endblock %}
 
     <footer class="py-5 bg-dark">
       <div class="container">

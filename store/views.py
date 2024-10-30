@@ -10,6 +10,9 @@ import os
 from django.contrib.auth import authenticate, login , logout
 from django.contrib import messages
 
+def register_user(request):
+    return render(request, 'register.html',{})
+
 def home(request):
     products = Product.objects.all()
     print(products)
