@@ -25,17 +25,7 @@
     <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
   </head>
   <body>
-    {% include "navbar.html" %} {% if messages %} {% for message in messages %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>메세지</strong> {{message}}
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
-    {% endfor %}
+    {% include "navbar.html" %}
     <!-- Header-->
     <header class="bg-dark py-5">
       <div class="container px-4 px-lg-5 my-5">
@@ -47,8 +37,7 @@
         </div>
       </div>
     </header>
-
-    {%endif%} {% block content %} {% endblock %}
+    {% block content %} {% endblock %}
 
     <footer class="py-5 bg-dark">
       <div class="container">

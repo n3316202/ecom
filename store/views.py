@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import Product
 
 from PIL import Image
@@ -6,6 +6,9 @@ from pathlib import Path
 from django.conf import settings
 import os
 
+#로그인 로그아웃 관련
+from django.contrib.auth import authenticate, login , logout
+from django.contrib import messages
 
 def home(request):
     products = Product.objects.all()
@@ -14,6 +17,29 @@ def home(request):
     image_size_change_products()
 
     return render(request,'home.html',{'products': products})
+
+def login_user(request):
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request,username=username,password=password)
+        
+        if user is not None:
+            login(request, user)
+            messages.success(request,"You Have been logged in")
+            return redirect('home')
+        else:
+            messages.success(request,("There was an error, please try again"))
+            return redirect('login')
+    else:    
+        return render(request, 'login.html',{})
+    
+
+def logout_user(request):
+    logout(request)
+    return redirect('home')
+
 
 def image_size_change_products():
 
