@@ -12,6 +12,10 @@ import os
 from django.contrib.auth import authenticate, login , logout
 from django.contrib import messages
 
+def product(request,pk):
+    product = P
+
+
 def register_user(request):
     print("register.. 실행")
     if request.method == "POST":
