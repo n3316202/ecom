@@ -13,7 +13,8 @@ from django.contrib.auth import authenticate, login , logout
 from django.contrib import messages
 
 def product(request,pk):
-    product = P
+    product = Product.objects.get(id=pk)
+    return render(request, 'product.html', {'product':product})
 
 
 def register_user(request):
