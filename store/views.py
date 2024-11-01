@@ -26,8 +26,9 @@ def category(request, foo):
         
         products = Product.objects.filter(category=category)
         print(products)
-
-        return render(request, 'category.html',{'products':products, 'category':category})
+        
+        return render(request, 'category.html',{'products':products,'category':category})
+    
     except:
         messages.success(request, ("That Category Does't ex"))        
         return redirect('home')
