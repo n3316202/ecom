@@ -12,17 +12,26 @@ import os
 from django.contrib.auth import authenticate, login , logout
 from django.contrib import messages
 
-def category(request,foo):
+def category(request, foo):
     #Replace Hyphens with Spaces
+
     foo = foo.replace('-',' ')
+    print(foo)
+
     # Grab the category from the url
     try:
+        #Look up the category
         category = Category.objects.get(name=foo)
+        print(category)
+        
         products = Product.objects.filter(category=category)
+        print(products)
+
         return render(request, 'category.html',{'products':products, 'category':category})
     except:
-        messages.success(request, ("That Category Does't ex"))
+        messages.success(request, ("That Category Does't ex"))        
         return redirect('home')
+    
 
 def product(request,pk):
     product = Product.objects.get(id=pk)
@@ -31,6 +40,7 @@ def product(request,pk):
 
 def register_user(request):
     print("register.. 실행")
+    
     if request.method == "POST":
         print("register.. 실행.....")
         form = SignUpForm(request.POST)
