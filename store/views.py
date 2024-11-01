@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 
 from store.forms import SignUpForm
-from .models import Product
+from .models import Category, Product
 
 from PIL import Image
 from pathlib import Path
@@ -11,6 +11,18 @@ import os
 #로그인 로그아웃 관련
 from django.contrib.auth import authenticate, login , logout
 from django.contrib import messages
+
+def category(request,foo):
+    #Replace Hyphens with Spaces
+    foo = foo.replace('-',' ')
+    # Grab the category from the url
+    try:
+        category = Category.objects.get(name=foo)
+        products = Product.objects.filter(category=category)
+        return render(request, 'category.html',{'products':products, 'category':category})
+    except:
+        messages.success(request, ("That Category Does't ex"))
+        return redirect('home')
 
 def product(request,pk):
     product = Product.objects.get(id=pk)
