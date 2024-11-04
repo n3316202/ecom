@@ -8,8 +8,8 @@ class Cart():
         if 'session_key' not in request.session:
             cart = self.session.session_key = {}
 
-        #make suer cart is avai
+        #make suer cart is available
         self.cart = cart
-        
-            
+
+
             
