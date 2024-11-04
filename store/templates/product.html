@@ -22,11 +22,36 @@
             </div>
             <!-- Product price-->
             <strike> ${{ product.price }} </strike>
-            &nbsp; ${{product.sale_price}} {% else %} ${{ product.price }} {%endif%}
+            &nbsp; ${{product.sale_price}} {% else %} ${{ product.price }}
+            <br />
+            ID : {{product.id}} {%endif%} <br /><br />
+            <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
+            <button type="button" value="{{product.id}}" id="add-cart" class="btn btn-secondary">Add to Cart</button>
           </center>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  $(document).on('click', '#add-cart',function(e){
+    $.ajax({
+      type:"POST",
+      url:'{% url 'cart_add' %}',
+      data:{
+        product_id: $('add-cart').val(),
+        csrfmiddlewaretoken:'{{  csrf_token }}',
+        action: 'post'
+      },
+      success : function(json){
+        console.log(json)
+      },
+      error : function(e){
+        console.log(e)
+      }
+    })
+  });
+</script>
+
 {% endblock%}
