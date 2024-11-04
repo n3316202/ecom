@@ -40,7 +40,7 @@
       type:"POST",
       url:'{% url 'cart_add' %}',
       data:{
-        product_id: $('add-cart').val(),
+        product_id: $('#add-cart').val(),
         csrfmiddlewaretoken:'{{  csrf_token }}',
         action: 'post'
       },

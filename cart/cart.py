@@ -17,10 +17,14 @@ class Cart():
     def add(self,product):
         product_id  = str(product_id)
 
+        #>>> a[3] = [1, 2, 3]
+        #>>> a
+        #{1: 'a', 2: 'b', 'name': 'pey', 3: [1, 2, 3]}
+
         if product_id in self.cart:
             pass
         else:
-            self.cart[product_id] = {'price': str()}
+            self.cart[product_id] = {'price': str(product.price)}
         
         self.session.modified = True
             

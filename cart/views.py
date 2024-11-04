@@ -4,26 +4,38 @@ from .cart import Cart
 from store.models import Product
 from django.http import JsonResponse
 
-def cart_summary(reqeust):
-    return render(reqeust, "cart_summary.html",{})
+def cart_summary(request):
+    return render(request, "cart_summary.html",{})
 
-def cart_add(reqeust):
-    cart  = Cart(reqeust)
-    if reqeust.POST.get('action') == 'POST':
+def cart_add(request):
+    
+    cart  = Cart(request)
+
+    print("카트========",cart)
+
+    if request.POST.get('action') == 'post':
+        print('=========')
+        
         #get stuff
-        product_id = int(reqeust.POST.get('prodcut_id'))
+        product_id = int(request.POST.get('product_id'))
+        print('product_id', product_id)
+
         # lookup proudct in DB
-        prodcut = get_object_or_404(Product,id=product_id)
+        product = get_object_or_404(Product,id=product_id)
+
+        print("프로덕트",product)
 
         #save to session
-        cart.add(prodcut=prodcut)
-        response = JsonResponse({'Product Name': prodcut.name})
-        
-        return response
+        cart.add(product=product)
+        response = JsonResponse({'Product Name': product.name})
 
-def cart_delete(reqeust):
+        return response
+    
+    print("카트========마지막")
+
+def cart_delete(request):
     pass
 
-def cart_update(reqeust):
+def cart_update(request):
     pass
 
