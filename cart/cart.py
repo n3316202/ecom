@@ -2,6 +2,7 @@
 # 아래코드 설명
 
 class Cart():
+
     def __init__(self,request):
         self.session = request.session
 
@@ -15,7 +16,8 @@ class Cart():
         self.cart = cart
 
     def add(self,product):
-        product_id  = str(product_id)
+
+        product_id  = str(product.id)
 
         #>>> a[3] = [1, 2, 3]
         #>>> a
