@@ -30,3 +30,5 @@ class Cart():
         
         self.session.modified = True
             
+    def __len__(self):
+        return len(self.cart)
