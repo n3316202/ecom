@@ -48,25 +48,24 @@
 </div>
 
 <script>
-  $(document).on('click', '#add-cart',function(e){
+  $(document).on('click', '#add-cart', function (e) {
     $.ajax({
-      type:"POST",
-      url:'{% url 'cart_add' %}',
-      data:{
+      type: 'POST',
+      url: "{% url 'cart_add' %}",
+      data: {
         product_id: $('#add-cart').val(),
         product_qty: $('#qty-cart option:selected').text(),
-        csrfmiddlewaretoken:'{{  csrf_token }}',
-        action: 'post'
+        csrfmiddlewaretoken: '{{  csrf_token }}',
+        action: 'post',
       },
-      success : function(json){
-
-        console.log(json)
-        $("#cart_quantity").text(json.qty)
+      success: function (json) {
+        console.log(json);
+        $('#cart_quantity').text(json.qty);
       },
-      error : function(e){
-        console.log(e)
-      }
-    })
+      error: function (e) {
+        console.log(e);
+      },
+    });
   });
 </script>
 

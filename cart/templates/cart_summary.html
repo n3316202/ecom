@@ -40,7 +40,7 @@
             <div class="row justify-content-center">
               <div class="col-md-2">Quantity</div>
               <div class="col-md-2">
-                <select class="form-select form-select-sm" id="qty-cart" aria-label="Default select example">
+                <select class="form-select form-select-sm" id="select{{product.id}}" aria-label="Default select example">
                   {% for key , value in quantities.items %} {% if key == product.id|slugify %}
                   <option selected>{{ value }}</option>
                   {% endif %} {% endfor %}
@@ -55,7 +55,8 @@
             </div>
             <br />
             <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
-            <button type="button" value="{{product.id}}" id="add-cart" class="btn btn-secondary">Add to Cart</button>
+            <!-- <button type="button" value="{{product.id}}" id="add-cart" class="btn btn-secondary">Add to Cart</button> -->
+            <button type="button" data-index="{{product.id}}" class="btn btn-secondary update-cart">Update</button>
           </center>
         </div>
       </div>
@@ -63,5 +64,30 @@
   </div>
   {% endfor %} {% else %} There's Nothing in your cart {% endif %}
 </div>
+
+<script>
+  $(document).on('click', '.update-cart', function (e) {
+    let productid = $(this).data('index');
+    let qty = $('#select' + productid + ' ' + 'option:selected').text();
+
+    $.ajax({
+      type: 'POST',
+      url: '{% url "cart_update" %}',
+      data: {
+        product_id: $(this).data('index'),
+        product_qty: qty,
+        csrfmiddlewaretoken: '{{  csrf_token }}',
+        action: 'post',
+      },
+      success: function (json) {
+        console.log(json);
+        location.reload();
+      },
+      error: function (e) {
+        console.log(e);
+      },
+    });
+  });
+</script>
 
 {%endblock content%}
