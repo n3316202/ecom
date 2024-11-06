@@ -57,6 +57,7 @@
             <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
             <!-- <button type="button" value="{{product.id}}" id="add-cart" class="btn btn-secondary">Add to Cart</button> -->
             <button type="button" data-index="{{product.id}}" class="btn btn-secondary update-cart">Update</button>
+            <button type="button" data-index="{{product.id}}" class="btn btn-danger delete-product">Delete</button>
           </center>
         </div>
       </div>
@@ -82,6 +83,28 @@
       success: function (json) {
         console.log(json);
         location.reload();
+      },
+      error: function (e) {
+        console.log(e);
+      },
+    });
+  });
+
+  $(document).on('click', '.delete-product', function (e) {
+    let productid = $(this).data('index');
+
+    $.ajax({
+      type: 'POST',
+      url: '{% url "cart_delete" %}',
+      data: {
+        product_id: $(this).data('index'),
+
+        csrfmiddlewaretoken: '{{  csrf_token }}',
+        action: 'post',
+      },
+      success: function (json) {
+        console.log(json);
+        location.reload(); //페이지 새로 고침
       },
       error: function (e) {
         console.log(e);
