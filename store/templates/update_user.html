@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+  <header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+      <div class="text-center text-white">
+        <h1 class="display-4 fw-bolder">Update Profile</h1>
+        <p class="lead fw-normal text-white-50 mb-0">Update user Profile..</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="container my-5">
+    <form method="post" action="{% url 'update_user' %}">
+      {% csrf_token %}
+      {% include "form_errors.html" %}
+      <div class="mb-3">
+        <label for="username">사용자 이름</label>
+        <input type="text" class="form-control" name="username" id="username" value="{{ user.username | default_if_none:'' }}"/>
+      </div>
+      {% comment %} <div class="mb-3">
+        <label for="password1">비밀번호</label>
+        <input type="password" class="form-control" name="password1" id="password1" value="{{ form.password1.value|default_if_none:'' }}"/>
+      </div>
+      <div class="mb-3">
+        <label for="password2">비밀번호 확인</label>
+        <input type="password" class="form-control" name="password2" id="password2" value="{{ form.password2.value|default_if_none:'' }}"/>
+      </div> {% endcomment %}
+      <div class="mb-3">
+        <label for="email">이메일</label>
+        <input type="text" class="form-control" name="email" id="email" value="{{ user.email | default_if_none:'' }}"/>
+      </div>
+      <button type="submit" class="btn btn-primary">업데이트</button>
+    </form>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+  </div>
+{%endblock content%}

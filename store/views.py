@@ -1,16 +1,35 @@
 from django.shortcuts import redirect, render
-
-from store.forms import SignUpForm
 from .models import Category, Product
 
 from PIL import Image
 from pathlib import Path
 from django.conf import settings
 import os
+from django.contrib.auth.models import User
 
 #로그인 로그아웃 관련
 from django.contrib.auth import authenticate, login , logout
 from django.contrib import messages
+from store.forms import SignUpForm,UpdateUserForm
+
+def update_user(request):
+    if request.user.is_authenticated:
+        current_user = User.objects.get(id = request.user.id)
+        user_form = UpdateUserForm(request.POST or None, instance=current_user)
+
+        if user_form.is_valid():
+            user_form.save()
+
+            login(request, current_user)
+            messages.success(request, "User has been updated!!")
+            return redirect('home')
+        
+        print("유저 폼",user_form)
+        return render(request, "update_user.html",{'user_form':user_form})
+    else:
+         messages.success(request, "You Must be logged In To Access That Page!!")
+         return redirect('home')
+
 
 def category_summary(request):
     categories = Category.objects.all()
