@@ -12,6 +12,11 @@ import os
 from django.contrib.auth import authenticate, login , logout
 from django.contrib import messages
 
+def category_summary(request):
+    categories = Category.objects.all()
+    print('카테고리', categories)
+    return render(request,'category_summary.html',{'categories':categories})
+
 def category(request, foo):
     #Replace Hyphens with Spaces
 
