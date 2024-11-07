@@ -17,12 +17,17 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
   </head>
   <body>
-    {% include "navbar.html" %} {% if messages %} {% for message in messages %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>메세지</strong> {{message}}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    {% endfor %} {%endif%} {% block content %} {% endblock %}
+    {% include "navbar.html" %} 
+        {% if messages %} 
+          {% for message in messages %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>메세지</strong> {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %} 
+        {%endif%} 
+      {% block content %} 
+    {% endblock %}
 
     <footer class="py-5 bg-dark">
       <div class="container">
