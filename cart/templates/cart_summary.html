@@ -63,7 +63,12 @@
       </div>
     </div>
   </div>
-  {% endfor %} {% else %} There's Nothing in your cart {% endif %}
+  {% endfor %}
+  <h3>Total: {{ totals }}</h3>
+  <br />
+  <br />
+  <br />
+  {% else %} There's Nothing in your cart {% endif %}
 </div>
 
 <script>
