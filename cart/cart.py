@@ -1,6 +1,7 @@
 #https://ramyo564.github.io/django/session/
 # 아래코드 설명
 
+from itertools import product
 from store.models import Product
 
 class Cart():
@@ -16,6 +17,27 @@ class Cart():
 
         #make suer cart is available
         self.cart = cart
+
+    def cart_total(self):
+        product_ids = self.cart.keys()
+        products = Product.objects.filter(id__in=product_ids)
+
+        quantities = self.cart
+
+        total = 0
+
+        for key, value in quantities.items():
+            #Convert key string into so we 
+            key = int(key)
+
+            for product in products:
+                if product.id  == key:
+                    if product.is_sale:
+                        total = total + (product.sale_price * value)
+                    else:
+                        total = total + (product.price * value)
+
+        return total
 
     def add(self,product, quantity):
 
