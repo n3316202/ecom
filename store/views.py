@@ -1,5 +1,5 @@
 from django.shortcuts import redirect, render
-from .models import Category, Product
+from .models import Category, Product, Profile
 
 from PIL import Image
 from pathlib import Path
@@ -10,7 +10,27 @@ from django.contrib.auth.models import User
 #로그인 로그아웃 관련
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
-from store.forms import ChangePasswordForm, SignUpForm,UpdateUserForm
+from store.forms import ChangePasswordForm, SignUpForm,UpdateUserForm, UserInfoForm
+
+
+def update_info(request):
+    
+    if request.user.is_authenticated:
+        current_user = Profile.objects.get(user__id = request.user.id)
+        
+        form = UserInfoForm(request.POST or None, instance=current_user)
+            
+        if form.is_valid():
+            form.save()
+
+            messages.success(request, "Your info has been updated!!")
+            return redirect('home')
+                
+        return render(request, "update_info.html",{'form':form})
+    else:
+         messages.success(request, "You Must be logged In To Access That Page!!")
+         return redirect('home')
+
 
 
 def update_password(request):

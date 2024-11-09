@@ -14,19 +14,30 @@
           <a class="nav-link" href="#!">About</a>
         </li>
         {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'update_user' %}">프로필(업데이트)</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-          </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">회원정보</a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" href="{% url 'update_user' %}">Use Profile</a>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a class="dropdown-item" href="{% url 'update_info' %}">User Info</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+        </li>
         {% else %}
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'login' %}">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'register' %}">회원가입</a>
-          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'login' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'register' %}">회원가입</a>
+        </li>
         {% endif %}
 
         <li class="nav-item dropdown">
@@ -36,7 +47,7 @@
               <a class="dropdown-item" href="{% url 'category_summary' %}">All Products</a>
             </li>
             <li>
-              <hr class="dropdown-divider"/>
+              <hr class="dropdown-divider" />
             </li>
             <li>
               <a class="dropdown-item" href="{% url 'category' 'Programming-Books' %}">Programming-Books</a>
