@@ -7,7 +7,8 @@ from .models import Profile
 class UserInfoForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = "__all__"
+        fields = ['phone', 'address1','address2','city','state','zipcode','country']
+        #fields = "__all__"
 
 class ChangePasswordForm(SetPasswordForm):
 

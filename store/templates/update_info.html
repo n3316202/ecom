@@ -11,10 +11,10 @@
 <div class="container my-5">
   <form method="post" action="{% url 'update_info' %}">
     {% csrf_token %} {% include "form_errors.html" %}
-    <!-- <div class="mb-3">
+    <div class="mb-3">
       <label for="username">사용자 이름</label>
       <input type="text" class="form-control" name="username" id="username" value="{{ user.username | default_if_none:'' }}" />
-    </div> -->
+    </div>
     <div class="mb-3">
       <label for="password1">전화번호</label>
       <input type="text" class="form-control" name="phone" id="phone" value="{{ form.phone.value|default_if_none:'' }}" />
