@@ -1,5 +1,6 @@
 from altair import Description
 from django.shortcuts import redirect, render
+from networkx import convert_node_labels_to_integers
 from .models import Category, Product, Profile
 
 from PIL import Image
@@ -8,6 +9,8 @@ from django.conf import settings
 import os
 from django.contrib.auth.models import User
 from django.db.models import Q
+import json
+from cart.cart import Cart
 
 #로그인 로그아웃 관련
 from django.contrib.auth import authenticate,login,logout
@@ -174,6 +177,25 @@ def login_user(request):
         
         if user is not None:
             login(request, user)
+
+            #Do some shopping cart stuff
+            current_user = Profile.objects.get(user__id=request.user.id)
+            
+            #Get their saved cart from database
+            saved_cart = current_user.old_cart
+
+            if saved_cart:
+                #Convert to dictionary using JOSN
+                converted_cart = json.loads(saved_cart)
+                #Add the loaded cart dictionary to our session
+                #Get the cart
+                cart = Cart(request)
+                #Loop thru the cart and add the items from the database
+                for key, value in converted_cart.items():
+                    print("===========",key,value)
+                    #cart.add(product=key,quantity=value)
+                    cart.db_add(product=key,quantity=value)
+
             messages.success(request,"You Have been logged in")
             return redirect('home')
         else:
@@ -181,7 +203,7 @@ def login_user(request):
             return redirect('login')
     else:    
         return render(request, 'login.html',{})
-    
+
 
 def logout_user(request):
     logout(request)
