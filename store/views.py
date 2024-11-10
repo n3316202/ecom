@@ -12,6 +12,18 @@ from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from store.forms import ChangePasswordForm, SignUpForm,UpdateUserForm, UserInfoForm
 
+def search(request):
+    #Determin if they filled out the form
+    if request.method == 'POST':
+        searched = request.POST['searched']
+        
+        searched = Product.objects.filter(name__icontains=searched)
+        print("서치=======", searched)
+        
+        return render(request, "search.html",{'searched':searched})
+    else:
+        return render(request, "search.html",{})
+   
 
 def update_info(request):
     
