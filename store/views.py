@@ -19,8 +19,13 @@ def search(request):
         
         searched = Product.objects.filter(name__icontains=searched)
         print("서치=======", searched)
-        
-        return render(request, "search.html",{'searched':searched})
+
+        #Test for null
+        if not searched:
+            messages.success(request,"That Product Does not Exist...")
+            return render(request, "search.html",{})
+        else:
+            return render(request, "search.html",{'searched':searched})
     else:
         return render(request, "search.html",{})
    
