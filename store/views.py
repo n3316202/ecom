@@ -1,3 +1,4 @@
+from altair import Description
 from django.shortcuts import redirect, render
 from .models import Category, Product, Profile
 
@@ -6,6 +7,7 @@ from pathlib import Path
 from django.conf import settings
 import os
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 #로그인 로그아웃 관련
 from django.contrib.auth import authenticate,login,logout
@@ -17,7 +19,7 @@ def search(request):
     if request.method == 'POST':
         searched = request.POST['searched']
         
-        searched = Product.objects.filter(name__icontains=searched)
+        searched = Product.objects.filter(Q(name__icontains=searched) | Q(description__icontains=searched) )
         print("서치=======", searched)
 
         #Test for null
