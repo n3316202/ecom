@@ -1,54 +1,64 @@
-{% extends 'base.html' %} {% block content %}
-<header class="bg-dark py-5">
-  <div class="container px-4 px-lg-5 my-5">
-    <div class="text-center text-white">
-      <h1 class="display-4 fw-bolder">Update Info</h1>
-      <p class="lead fw-normal text-white-50 mb-0">Update user Info..</p>
+{% extends 'base.html' %}
+{% block content %}
+  <header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+      <div class="text-center text-white">
+        <h1 class="display-4 fw-bolder">Update Info</h1>
+        <p class="lead fw-normal text-white-50 mb-0">Update user Info..</p>
+      </div>
     </div>
+  </header>
+
+  <div class="container my-5">
+    <strong class="text-center">결재 정보</strong>
+    <br>
+    <br>
+    <form method="post" action="{% url 'update_info' %}">
+      {% csrf_token %}
+      {% include "form_errors.html" %}
+      <div class="mb-3">
+        <label for="username">사용자 이름</label>
+        <input type="text" class="form-control" name="username" id="username" value="{{ user.username | default_if_none:'' }}"/>
+      </div>
+      <div class="mb-3">
+        <label for="password1">전화번호</label>
+        <input type="text" class="form-control" name="phone" id="phone" value="{{ form.phone.value|default_if_none:'' }}"/>
+      </div>
+      <div class="mb-3">
+        <label for="password1">주소1</label>
+        <input type="text" class="form-control" name="address1" id="address1" value="{{ form.address1.value|default_if_none:'' }}"/>
+      </div>
+      <div class="mb-3">
+        <label for="password1">주소2</label>
+        <input type="text" class="form-control" name="address2" id="address2" value="{{ form.address2.value|default_if_none:'' }}"/>
+      </div>
+      <div class="mb-3">
+        <label for="password1">도시</label>
+        <input type="text" class="form-control" name="city" id="city" value="{{ form.city.value|default_if_none:'' }}"/>
+      </div>
+      <div class="mb-3">
+        <label for="state">군/구</label>
+        <input type="text" class="form-control" name="state" id="state" value="{{ form.state.value|default_if_none:'' }}"/>
+      </div>
+      <div class="mb-3">
+        <label for="password1">ZipCode</label>
+        <input type="text" class="form-control" name="zipcode" id="zipcode" value="{{ form.zipcode.value|default_if_none:'' }}"/>
+      </div>
+      <div class="mb-3">
+        <label for="country">Contry</label>
+        <input type="text" class="form-control" name="country" id="country" value="{{ form.country.value|default_if_none:'' }}"/>
+      </div>
+      <br>
+      <br>
+      <strong>배송정보</strong>
+      <br><br>
+      {{shipping_form.as_p }}
+
+      <button type="submit" class="btn btn-primary">업데이트</button>
+    </form>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
   </div>
-</header>
-
-<div class="container my-5">
-  <form method="post" action="{% url 'update_info' %}">
-    {% csrf_token %} {% include "form_errors.html" %}
-    <div class="mb-3">
-      <label for="username">사용자 이름</label>
-      <input type="text" class="form-control" name="username" id="username" value="{{ user.username | default_if_none:'' }}" />
-    </div>
-    <div class="mb-3">
-      <label for="password1">전화번호</label>
-      <input type="text" class="form-control" name="phone" id="phone" value="{{ form.phone.value|default_if_none:'' }}" />
-    </div>
-    <div class="mb-3">
-      <label for="password1">주소1</label>
-      <input type="text" class="form-control" name="address1" id="address1" value="{{ form.address1.value|default_if_none:'' }}" />
-    </div>
-    <div class="mb-3">
-      <label for="password1">주소2</label>
-      <input type="text" class="form-control" name="address2" id="address2" value="{{ form.address2.value|default_if_none:'' }}" />
-    </div>
-    <div class="mb-3">
-      <label for="password1">도시</label>
-      <input type="text" class="form-control" name="city" id="city" value="{{ form.city.value|default_if_none:'' }}" />
-    </div>
-    <div class="mb-3">
-      <label for="state">군/구</label>
-      <input type="text" class="form-control" name="state" id="state" value="{{ form.state.value|default_if_none:'' }}" />
-    </div>
-    <div class="mb-3">
-      <label for="password1">ZipCode</label>
-      <input type="text" class="form-control" name="zipcode" id="zipcode" value="{{ form.zipcode.value|default_if_none:'' }}" />
-    </div>
-    <div class="mb-3">
-      <label for="country">Contry</label>
-      <input type="text" class="form-control" name="country" id="country" value="{{ form.country.value|default_if_none:'' }}" />
-    </div>
-
-    <button type="submit" class="btn btn-primary">업데이트</button>
-  </form>
-  <br />
-  <br />
-  <br />
-  <br />
-</div>
 {%endblock content%}
