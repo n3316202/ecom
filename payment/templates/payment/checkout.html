@@ -11,124 +11,89 @@
   <br/>
 
   <div class="container">
-    {% if cart_products%}
-      {% for product in cart_products %}
-
-        <div class="card mb-3">
-          <div class="row g-0">
-            <div class="col-md-4">
-              <img src="{{product.image.url}}" class="img-fluid rounded-start" alt="..."/>
-            </div>
-            <div class="col-md-8">
-              <div class="card-body mt-4">
-                <center>
-                  <h5 class="card-title">{{product.name}}</h5>
-                  <p class="card-text">{{product.description}}</p>
-
-                  {% if product.is_sale%}
-
-                    <div class="d-flex justify-content-center small text-warning mb-2">
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                      <div class="bi-star-fill"></div>
-                    </div>
-                    <!-- Product price-->
-                    <strike>
-                      ${{ product.price }}
-                    </strike>
-                    &nbsp; ${{product.sale_price}}
-                  {% else %}
-                    ${{ product.price }}
-                    <br/>
-                    ID :
-                    {{product.id}}
-                    {%endif%}
-                    <br/><br/>
-                    <div class="row justify-content-center">
-                      <div class="col-md-2">Quantity</div>
-                      <div class="col-md-2">
-                        <select class="form-select form-select-sm" id="select{{product.id}}" aria-label="Default select example">
-                          {% for key, value in quantities.items %}
-                            {% if key == product.id | slugify %}
-                              <option selected="selected">{{ value }}</option>
-                            {% endif %}
-                          {% endfor %}
-
-                          <option value="1">1</option>
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                        </select>
-                      </div>
-                    </div>
-                    <br/>
-                    <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
-                    <!-- <button type="button" value="{{product.id}}" id="add-cart" class="btn btn-secondary">Add to Cart</button> -->
-                    <button type="button" data-index="{{product.id}}" class="btn btn-secondary update-cart">Update</button>
-                    <button type="button" data-index="{{product.id}}" class="btn btn-danger delete-product">Delete</button>
-                  </center>
-                </div>
-              </div>
-            </div>
+    <div class="card mb-3">
+      <div class="row g-0">
+        <div class="col-md-8">
+          <div class="card-body mt-4">
+            <center>
+              {% for product in cart_products %}
+                {{ product.name }}
+                {% if product.is_sale %}
+                  ${{product.sale_price}}
+                {% else %}
+                  ${{product.price}}
+                {% endif %}
+                <br>
+                <small>
+                  Quantity:
+                  {% for key, value in quantities.items %}
+                    {% if key == product.id|slugify%}
+                      {{value}}
+                    {% endif %}
+                  {% endfor %}
+                </small>
+                <br>
+                <br>
+              {% endfor %}
+              Total: ${{totals}}
+              <br>
+              <a href="{% url 'cart_summary' %}" class="btn btn-sm btn-outline-secondary">Update Items</a>
+            </center>
           </div>
-        {% endfor %}
-
-        <br/>
-        <br/>
-        <br/>
-      {% else %}
-        There's Nothing in your cart
-      {% endif %}
+        </div>
+      </div>
     </div>
 
-    <script>
-      $(document).on('click', '.update-cart', function (e) {
-        let productid = $(this).data('index');
-        let qty = $('#select' + productid + ' ' + 'option:selected').text();
+    <br/>
+    <br/>
+    <br/>
+  </div>
 
-        $.ajax({
-          type: 'POST',
-          url: '{% url "cart_update" %}',
-          data: {
-            product_id: $(this).data('index'),
-            product_qty: qty,
-            csrfmiddlewaretoken: '{{  csrf_token }}',
-            action: 'post'
-          },
-          success: function (json) {
-            console.log(json);
-            location.reload();
-          },
-          error: function (e) {
-            console.log(e);
-          }
-        });
+  <script>
+    $(document).on('click', '.update-cart', function (e) {
+      let productid = $(this).data('index');
+      let qty = $('#select' + productid + ' ' + 'option:selected').text();
+
+      $.ajax({
+        type: 'POST',
+        url: '{% url "cart_update" %}',
+        data: {
+          product_id: $(this).data('index'),
+          product_qty: qty,
+          csrfmiddlewaretoken: '{{  csrf_token }}',
+          action: 'post'
+        },
+        success: function (json) {
+          console.log(json);
+          location.reload();
+        },
+        error: function (e) {
+          console.log(e);
+        }
       });
+    });
 
-      $(document).on('click', '.delete-product', function (e) {
-        let productid = $(this).data('index');
+    $(document).on('click', '.delete-product', function (e) {
+      let productid = $(this).data('index');
 
-        $.ajax({
-          type: 'POST',
-          url: '{% url "cart_delete" %}',
-          data: {
-            product_id: $(this).data('index'),
+      $.ajax({
+        type: 'POST',
+        url: '{% url "cart_delete" %}',
+        data: {
+          product_id: $(this).data('index'),
 
-            csrfmiddlewaretoken: '{{  csrf_token }}',
-            action: 'post'
-          },
-          success: function (json) {
-            console.log(json);
-            location.reload(); //페이지 새로 고침
-          },
-          error: function (e) {
-            console.log(e);
-          }
-        });
+          csrfmiddlewaretoken: '{{  csrf_token }}',
+          action: 'post'
+        },
+        success: function (json) {
+          console.log(json);
+          location.reload(); //페이지 새로 고침
+        },
+        error: function (e) {
+          console.log(e);
+        }
       });
-    </script>
+    });
+  </script>
 
-  {%endblock content%}
+{%endblock content%}
