@@ -1,6 +1,4 @@
-from altair import Description
 from django.shortcuts import redirect, render
-from networkx import convert_node_labels_to_integers
 from .models import Category, Product, Profile
 
 from PIL import Image

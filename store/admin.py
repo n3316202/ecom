@@ -1,5 +1,4 @@
 from django.contrib import admin
-from matplotlib.pyplot import cla
 from .models import Category , Customer, Order, Product , Profile
 from django.contrib.auth.models import User
 
