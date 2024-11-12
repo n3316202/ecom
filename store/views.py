@@ -42,7 +42,7 @@ def update_info(request):
     if request.user.is_authenticated:
         current_user = Profile.objects.get(user__id = request.user.id)
         
-        #Get Current uer's shipping Info
+        #Get Current user's shipping Info
         shipping_user = ShippingAddress.objects.get(id=request.user.id)
 
         #Get original User Form
