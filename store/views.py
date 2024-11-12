@@ -14,8 +14,6 @@ from cart.cart import Cart
 from payment.forms import ShippingForm
 from payment.models import ShippingAddress
 
-
-
 #로그인 로그아웃 관련
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
