@@ -25,9 +25,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'store',
-    'cart',
-    'payment'
+    "store",
+    "cart",
+    "payment",
 ]
 
 MIDDLEWARE = [
@@ -53,7 +53,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                'cart.context_processors.cart'
+                "cart.context_processors.cart",
             ],
         },
     },
@@ -108,12 +108,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = ['static/']
+STATICFILES_DIRS = ["static/"]
 
 import os
 
-MEDIA_URL = 'media/'		# ex) /media/photo1.png
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = "media/"  # ex) /media/photo1.png
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
 # Default primary key field type

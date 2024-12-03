@@ -17,23 +17,38 @@ def checkout(request):
     totals = cart.cart_total()
 
     if request.user.is_authenticated:
-         
-         shipping_user = ShippingAddress.objects.get(id=request.user.id)
-         #checkout as logged in user
-         shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
-        
-         return render(request, "payment/checkout.html",{"cart_products": cart_products,"quantities": quantities,"totals":totals,"shipping_form":shipping_form})
-    else:
-        #checkout as guest
-        shipping_form = ShippingForm(request.POST or None)
-        
-        return render(request, "payment/checkout.html",{"cart_products": cart_products,"quantities": quantities,"totals":totals,"shipping_form":shipping_form})
-  
 
-  
+        shipping_user = ShippingAddress.objects.get(id=request.user.id)
+        # checkout as logged in user
+        shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
+
+        return render(
+            request,
+            "payment/checkout.html",
+            {
+                "cart_products": cart_products,
+                "quantities": quantities,
+                "totals": totals,
+                "shipping_form": shipping_form,
+            },
+        )
+    else:
+        # checkout as guest
+        shipping_form = ShippingForm(request.POST or None)
+
+        return render(
+            request,
+            "payment/checkout.html",
+            {
+                "cart_products": cart_products,
+                "quantities": quantities,
+                "totals": totals,
+                "shipping_form": shipping_form,
+            },
+        )
 
 
 # Create your views here.
 # Create your views here.
 def payment_success(request):
-    return render(request, "payment/payment_success.html",{})
+    return render(request, "payment/payment_success.html", {})
