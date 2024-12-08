@@ -5,6 +5,8 @@ from store.models import Product
 from django.http import JsonResponse
 from django.contrib import messages
 
+from payment.forms import ShippingForm
+from payment.models import ShippingAddress
 
 
 def checkout(request):
@@ -13,8 +15,22 @@ def checkout(request):
     cart_products = cart.get_prods()
     quantities = cart.get_quants()
     totals = cart.cart_total()
-    print("아아",quantities)
-    return render(request, "payment/checkout.html",{"cart_products": cart_products,"quantities": quantities,"totals":totals})
+
+    if request.user.is_authenticated:
+         
+         shipping_user = ShippingAddress.objects.get(id=request.user.id)
+         #checkout as logged in user
+         shipping_form = ShippingForm(request.POST or None, instance=shipping_user)
+        
+         return render(request, "payment/checkout.html",{"cart_products": cart_products,"quantities": quantities,"totals":totals,"shipping_form":shipping_form})
+    else:
+        #checkout as guest
+        shipping_form = ShippingForm(request.POST or None)
+        
+        return render(request, "payment/checkout.html",{"cart_products": cart_products,"quantities": quantities,"totals":totals,"shipping_form":shipping_form})
+  
+
+  
 
 
 # Create your views here.
