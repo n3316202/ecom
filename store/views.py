@@ -1,7 +1,7 @@
 from django.shortcuts import redirect, render
 
 from store.forms import SignUpForm
-from .models import Category, Product
+from .models import Product
 
 from PIL import Image
 from pathlib import Path
@@ -12,28 +12,6 @@ import os
 from django.contrib.auth import authenticate, login , logout
 from django.contrib import messages
 
-def category(request, foo):
-    #Replace Hyphens with Spaces
-
-    foo = foo.replace('-',' ')
-    print(foo)
-
-    # Grab the category from the url
-    try:
-        #Look up the category
-        category = Category.objects.get(name=foo)
-        print(category)
-        
-        products = Product.objects.filter(category=category)
-        print(products)
-        
-        return render(request, 'category.html',{'products':products,'category':category})
-    
-    except:
-        messages.success(request, ("That Category Does't ex"))        
-        return redirect('home')
-    
-
 def product(request,pk):
     product = Product.objects.get(id=pk)
     return render(request, 'product.html', {'product':product})
@@ -41,7 +19,6 @@ def product(request,pk):
 
 def register_user(request):
     print("register.. 실행")
-    
     if request.method == "POST":
         print("register.. 실행.....")
         form = SignUpForm(request.POST)
